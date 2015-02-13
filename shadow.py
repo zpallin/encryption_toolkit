@@ -4,7 +4,7 @@
 #   by Zpallin
 #
 #   Prints a highly randomized, secure password hash to be inserted into linux /etc/shadow files. 
-#   
+#   Remember to: sudo pip install passlib
 
 import crypt, getpass, random, string
 from passlib.hash import sha512_crypt
