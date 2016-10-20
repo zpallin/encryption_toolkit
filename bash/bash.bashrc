@@ -4,7 +4,11 @@
 # this file has to be sourced in /etc/profile.
 
 # If not running interactively, don't do anything
-[ -z "$PS1" ] && return
+# [ -z "$PS1" ] && return
+
+if [ -z "$PS1" ]; then
+  shopt -s expand_aliases
+fi
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
