@@ -110,14 +110,26 @@ function marks {
 }
 
 # Profile
-parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+parse_branch() {
+  FORMAT_STRING=""
+  IS_GIT=`git rev-parse --is-inside-work-tree > /dev/null 2>&1; echo $?`
+  IS_HGR=`hg summary > /dev/null 2>&1; echo $?`
+
+  if [ "$IS_HGR" == "0" ]; then
+    FORMAT_STRING="hg:$(hg branch 2> /dev/null)"
+    FORMAT_STRING="($FORMAT_STRING)"
+  elif [ "$IS_GIT" == "0" ]; then
+    FORMAT_STRING="git:$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
+    FORMAT_STRING="($FORMAT_STRING)"
+  fi
+
+  echo $FORMAT_STRING
 }
 
 # logic for the branch type
-branch="\$(parse_git_branch)"
+branch="\$(parse_branch)"
 if [ -n "$branch" ]; then
-    branch="$DARKGRAY($LIGHTGREEN$branch$DARKGRAY)$NOCOLOR"
+    branch="$DARKGRAY$LIGHTGREEN$branch$DARKGRAY$NOCOLOR"
 fi
 
 export PS1="$GREEN\u$DARKGRAY@$WHITE\h:$LIGHTGRAY\W $branch$WHITE\$$LIGHTGRAY "
@@ -167,3 +179,24 @@ fi
 ##########################################################################################
 
 alias j='jump'
+
+get_cookbook() {
+  COOKBOOK_DEST="/home/zpallin/Desktop/Repositories/OutwardRepos/outward_chef_workstation/cookbooks"
+  CURRENT_DIR="$(pwd)"
+
+  if [ -z "$1" ]; then
+    echo "ERROR: You need to declare a cookbook name to clone"
+    return 1
+  fi
+
+  if [ ! -z "$1" ] && [ ! -z "$2" ] && ([ $1 = "debug" ] || [ $2 = "debug" ]); then
+    echo " - Executing from: $CURRENT_DIR"
+    echo " - Cookbook destination: $COOKBOOK_DEST"
+  fi
+
+  cd "$COOKBOOK_DEST"
+  git clone git@bitbucket.org:outwardinc/$1
+
+  cd "$CURRENT_DIR"
+  return 0
+}
