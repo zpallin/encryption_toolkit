@@ -174,29 +174,12 @@ if [ "$TERM_PROGRAM" == "Apple_Terminal" ] && [ -z "$INSIDE_EMACS" ]; then
 fi
 
 
-###########
-# ALIASES #
-##########################################################################################
+################################################################################
+# custom configuration
+export VISUAL=vim
+export EDITOR="$VISUAL"
 
+################################################################################
+# aliases
 alias j='jump'
 
-get_cookbook() {
-  COOKBOOK_DEST="/home/zpallin/Desktop/Repositories/OutwardRepos/outward_chef_workstation/cookbooks"
-  CURRENT_DIR="$(pwd)"
-
-  if [ -z "$1" ]; then
-    echo "ERROR: You need to declare a cookbook name to clone"
-    return 1
-  fi
-
-  if [ ! -z "$1" ] && [ ! -z "$2" ] && ([ $1 = "debug" ] || [ $2 = "debug" ]); then
-    echo " - Executing from: $CURRENT_DIR"
-    echo " - Cookbook destination: $COOKBOOK_DEST"
-  fi
-
-  cd "$COOKBOOK_DEST"
-  git clone git@bitbucket.org:outwardinc/$1
-
-  cd "$CURRENT_DIR"
-  return 0
-}
