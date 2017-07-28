@@ -87,12 +87,18 @@ NOCOLOR="\[\033[0m\]"
 # import all includes
 
 echo "LOADING bash_includes"
-for file in ~/.bash_includes/* ; do
-  if [ -f "$file" ] ; then
-    echo " - Loading \"$file\""
-    source "$file"
+for file in ~/.bash_includes/*.sh ; do
+  if [[ $(basename $file) == *"README.md"* ]];
+  then
+    echo " - $(basename $file) exists, but will not be sourced"    
   else
-    echo " - Doesn't exist: \"$file\""
+    if [ -f "$file" ]; 
+    then
+      echo " - Loading \"$file\""
+      source "$file"
+    else
+      echo " - Doesn't exist: \"$file\""
+    fi
   fi
 done
 

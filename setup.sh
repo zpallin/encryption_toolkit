@@ -46,7 +46,6 @@ cd $SCRIPTPATH
 
 ################################################################################
 # errors schmerrors
-mark toolkit &>/dev/null
 cd $PWD
 
 echo "FINISHED"
