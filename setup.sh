@@ -31,12 +31,12 @@ cp vim/zpallin.vimrc ~/.vimrc
 cp bash/inputrc ~/.inputrc
 
 echo " - Copying bash includes where custom code can be stored safely"
-mkdir ~/.bash_includes
+mkdir -p ~/.bash_includes
 cp -rf bash/includes/* ~/.bash_includes/
 
 ################################################################################
 # initiate the new bash env
-echo " - Enabling bashrc"
+echo "ENABLING bashrc"
 source ~/.bashrc
 
 ################################################################################

@@ -86,9 +86,13 @@ NOCOLOR="\[\033[0m\]"
 ################################################################################
 # import all includes
 
-for file in * ; do
+echo "LOADING bash_includes"
+for file in ~/.bash_includes/* ; do
   if [ -f "$file" ] ; then
-    . "$file"
+    echo " - Loading \"$file\""
+    source "$file"
+  else
+    echo " - Doesn't exist: \"$file\""
   fi
 done
 
