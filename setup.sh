@@ -2,9 +2,7 @@
 
 echo "STARTING zpallin/toolkit SETUP"
 
-PWD=$( pwd )
-SCRIPT=`realpath $0`
-SCRIPTPATH=`dirname $SCRIPT`
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 ################################################################################
 # copy bashrc and vimrc so you don't loose it
@@ -41,11 +39,8 @@ source ~/.bashrc
 
 ################################################################################
 # move to the toolkit
-echo " - Marking toolkit, for you"
-cd $SCRIPTPATH
+cd $DIR
 
 ################################################################################
 # errors schmerrors
-cd $PWD
-
 echo "FINISHED"
