@@ -1,5 +1,5 @@
 
-[home](README.md)
+[home](/README.md)
 
 Bash Includes
 =============
