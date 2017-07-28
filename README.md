@@ -31,8 +31,8 @@ bash setup.sh
 
 Voila!
 
-Features Includes
------------------
+Bash Includes
+-------------
 
 There are a number of bash scripts included here, which [you can learn about here](bash/includes/README.md).
 
