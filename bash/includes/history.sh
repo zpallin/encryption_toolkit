@@ -12,9 +12,6 @@ shopt -s histappend
 HISTFILEZIE=1000000
 HISTSIZE=1000000
 
-# ignorespace and ignoredups
-HISTCONTROL=ignoreboth
-
 # histignore
 HISTIGNORE='ls:bg:fg:history'
 
@@ -25,7 +22,10 @@ HISTTIMEFORMAT='%F %T'
 shopt -s cmdhist
 
 # store history immediate
-PROMPT_COMMAND='history -a'
+export HISTCONTROL=ignoreboth;ignoredups:erasedups
+export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+
+PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 
 # Tell the terminal about the working directory at each prompt.
 if [ "$TERM_PROGRAM" == "Apple_Terminal" ] && [ -z "$INSIDE_EMACS" ]; then
@@ -40,5 +40,3 @@ if [ "$TERM_PROGRAM" == "Apple_Terminal" ] && [ -z "$INSIDE_EMACS" ]; then
     }
     PROMPT_COMMAND="update_terminal_cwd; $PROMPT_COMMAND"
 fi
-
-
