@@ -7,6 +7,6 @@ export EDITOR="$VISUAL"
 
 if type "git" > /dev/null 2>&1
 then
-  git config --global push.default "matching"
+  git config push.default "matching"
 fi
 
