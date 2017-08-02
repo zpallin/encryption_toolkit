@@ -1,4 +1,5 @@
 #!/bin/bash
+set +x
 
 ################################################################################
 # Make bash check its window size after a process completes
@@ -22,10 +23,9 @@ HISTTIMEFORMAT='%F %T'
 shopt -s cmdhist
 
 # store history immediate
-export HISTCONTROL=ignoreboth;ignoredups:erasedups
-export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
-
-PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
+HISTCONTROL=ignoredups:erasedups
+shopt -s histappend
+PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
 
 # Tell the terminal about the working directory at each prompt.
 if [ "$TERM_PROGRAM" == "Apple_Terminal" ] && [ -z "$INSIDE_EMACS" ]; then
