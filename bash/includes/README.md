@@ -9,10 +9,11 @@ I will try to keep this up to date as best as possible.
 git.sh
 ------
 
-Environment settings for git as well as some additional functionality.
+Environment settings for git.
 
-### git-new-branch
-creates a new branch in the local repository and pushes it to your `origin`, setting upstream pushing abilities.
+| setting | value |
+|---------|-------|
+| push.default | matching |
 
 history.sh
 ----------
