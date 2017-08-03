@@ -87,7 +87,8 @@ NOCOLOR="\[\033[0m\]"
 # import all includes
 
 echo "LOADING bash_includes"
-for file in ~/.bash_includes/*.sh ; do
+for file in ~/.bash_includes/*.sh
+do
   if [[ $(basename $file) == *"README.md"* ]];
   then
     echo " - $(basename $file) exists, but will not be sourced"    
@@ -101,4 +102,9 @@ for file in ~/.bash_includes/*.sh ; do
     fi
   fi
 done
+
+echo "ADDING ~/.bash_bin to environment"
+BASH_BIN=~/.bash_bin
+mkdir -p $BASH_BIN
+PATH="$BASH_BIN:$PATH"
 

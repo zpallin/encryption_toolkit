@@ -19,13 +19,9 @@ HISTIGNORE='ls:bg:fg:history'
 # time stamps
 HISTTIMEFORMAT='%F %T'
 
-# fit cmd history on one line
-shopt -s cmdhist
-
 # store history immediate
-HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
-PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
+PROMPT_COMMAND="history -a;history -c;history -r;$PROMPT_COMMAND"
 
 # Tell the terminal about the working directory at each prompt.
 if [ "$TERM_PROGRAM" == "Apple_Terminal" ] && [ -z "$INSIDE_EMACS" ]; then
