@@ -24,13 +24,27 @@ fi
 ################################################################################
 # now, copy the bash config files
 echo " - Copying new bashrc, vimrc, and inputrc files to locations"
-cp bash/bash.bashrc ~/.bashrc
-cp vim/zpallin.vimrc ~/.vimrc
-cp bash/inputrc ~/.inputrc
+cp $DIR/bash/bash.bashrc ~/.bashrc
+cp $DIR/vim/zpallin.vimrc ~/.vimrc
+cp $DIR/bash/inputrc ~/.inputrc
 
 echo " - Copying bash includes where custom code can be stored safely"
 mkdir -p ~/.bash_includes
-cp -rf bash/includes/* ~/.bash_includes/
+cp -rf $DIR/bash/includes/* ~/.bash_includes/
+
+echo " - Copying bash bin to include binaries included by this toolkit"
+mkdir -p ~/.bash_bin
+cp -rf $DIR/bash/bin/* ~/.bash_bin/
+
+# and then set the permissions correctly for the files
+for file in $DIR/bash/bin/*
+do
+  filename=$(basename $file)
+  if [ -f ~/.bash_bin/$filename ]
+  then
+    chmod 0750 ~/.bash_bin/$filename
+  fi
+done
 
 ################################################################################
 # initiate the new bash env
