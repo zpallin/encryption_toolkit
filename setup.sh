@@ -47,6 +47,27 @@ do
 done
 
 ################################################################################
+echo " - Installing pathogen"
+mkdir -p ~/.vim/autoload ~/.vim/bundle && \
+curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+PATHOGEN_INSTALLS="
+git@github.com:rust-lang/rust.vim.git
+git@github.com:pangloss/vim-javascript.git"
+
+for pathogen in $PATHOGEN_INSTALLS;
+do
+  FULLNAME="$(echo $pathogen | sed 's/.*:\(.*\).git/\1/')"
+  SHORTNAME="$(echo $FULLNAME | sed -e 's/.*\///' -e 's/\(.*\)\..*/\1/')"
+  INSTALLDIR=~/.vim/bundle/$SHORTNAME
+  echo "  - Adding pathogen $SHORTNAME ($FULLNAME)"
+  mkdir -p $INSTALLDIR && cd $INSTALLDIR
+  git init > /dev/null 2>&1
+  git remote add origin $pathogen > /dev/null 2>&1
+  git fetch --all > /dev/null 2>&1
+  git pull --rebase > /dev/null 2>&1
+done
+
+################################################################################
 # initiate the new bash env
 echo "ENABLING bashrc"
 source ~/.bashrc
