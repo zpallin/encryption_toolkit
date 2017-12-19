@@ -52,7 +52,8 @@ mkdir -p ~/.vim/autoload ~/.vim/bundle && \
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 PATHOGEN_INSTALLS="
 git@github.com:rust-lang/rust.vim.git
-git@github.com:pangloss/vim-javascript.git"
+git@github.com:pangloss/vim-javascript.git
+git@github.com/hashivim/vim-terraform.git"
 
 for pathogen in $PATHOGEN_INSTALLS;
 do
