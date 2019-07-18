@@ -19,7 +19,7 @@ You MUST have:
 - Linux
 - MacOSX
 
-This will not work on Windows. I have tested it on both Mac and Linux and it works fine. You might be able to have it work in `git_bash` on windows but I am not guaranteeing anything.
+If you want to use this on Windows, please enable the Ubuntu Subshell. You can install it with [these instructions](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/).
 
 To setup:
 
