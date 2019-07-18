@@ -20,11 +20,9 @@ parse_branch() {
 # logic for the branch type
 branch="\$(parse_branch)"
 if [ -n "$branch" ] && [ "$branch" != "" ]; then
-  branch=" $DARKGRAY($YELLOW$branch$DARKGRAY)$WHITE"
+  branch=" $DARKGRAY($YELLOW$branch$DARKGRAY)$GRAY"
 fi
 
 # logic for attaching date
-DATESTR=$(date)
-
-export PS1="$WHITE:: $DARKGRAY($CYAN$DATESTR$DARKGRAY)$WHITE\n:: $GREEN\u$DARKGRAY@$WHITE\h:$LIGHTCYAN\W$branch\n:>$LIGHTGRAY "
+export PS1="$DARKGRAY:: $DARKGRAY($CYAN\$(date)$DARKGRAY)$DARKGRAY\n:: $GREEN\u$DARKGRAY@$GRAY\h:$LIGHTCYAN\W$branch\n$DARKGRAY:>$WHITE "
 
