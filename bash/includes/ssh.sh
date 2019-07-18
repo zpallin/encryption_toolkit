@@ -11,7 +11,7 @@ SSHTOOLKITHEADER="#zpallin-toolkit-ssh-head"
 SSHTOOLKITFOOTER="#zpallin-toolkit-ssh-foot"
 
 function insert-ssh-config() {
-	INSERTCONF='Host *\n\tIgnoreUnknown yes\n\tAddKeysToAgent yes\n\tIdentityFile~\/.ssh\/id_rsa'
+	INSERTCONF='Host *\n\tIgnoreUnknown yes\n\tAddKeysToAgent yes\n\tIdentityFile ~\/.ssh\/id_rsa'
 
 	sed -i -n "/#zpallin.toolkit.ssh.head/{p;:a;N;/#zpallin.toolkit.ssh.foot/!ba;s/.*\n/$INSERTCONF\n/};p" ~/.ssh/config
 }
