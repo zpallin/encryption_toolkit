@@ -22,9 +22,8 @@ parse_branch() {
 # logic for the branch type
 branch="\$(parse_branch)"
 if [ -n "$branch" ]; then
-    branch="$DARKGRAY$LIGHTGREEN$branch$DARKGRAY$NOCOLOR"
+    branch=" $DARKGRAY$LIGHTCYAN$branch$DARKGRAY$NOCOLOR"
 fi
 
-export PS1="$GREEN\u$DARKGRAY@$WHITE\h:$LIGHTGRAY\W $branch$WHITE\$$LIGHTGRAY "
-
+export PS1="\n:: $GREEN\u$DARKGRAY@$WHITE\h:$LIGHTGRAY\W$branch$WHITE\n~>$LIGHTGRAY "
 

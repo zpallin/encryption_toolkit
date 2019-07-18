@@ -50,10 +50,32 @@ done
 echo " - Installing pathogen"
 mkdir -p ~/.vim/autoload ~/.vim/bundle && \
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+
+# ask if ssh key should be used, otherwise install pathogen via https
+while true; do
+	read -p " - Use \"~/.ssh/id_rsa\" to clone pathogen repos? (y/n) " RESP
+
+	if [ "$RESP" == "y" ]; then
+    printf "\n\n"
+    eval `ssh-agent -s`
+		ssh-add ~/.ssh/id_rsa
+		GHS='git@'
+		GHD=':'
+    printf "\n\n"
+    break
+	fi
+
+	if ["$RESP" == "n" ]; then
+		GHS='https://'
+		GHD='/'
+    break
+	fi
+done
+
 PATHOGEN_INSTALLS="
-git@github.com:rust-lang/rust.vim.git
-git@github.com:pangloss/vim-javascript.git
-git@github.com:hashivim/vim-terraform.git"
+${GHS}github.com${GHD}rust-lang/rust.vim.git
+${GHS}github.com${GHD}pangloss/vim-javascript.git
+${GHS}github.com${GHD}hashivim/vim-terraform.git"
 
 for pathogen in $PATHOGEN_INSTALLS;
 do
