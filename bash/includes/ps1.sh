@@ -10,10 +10,8 @@ parse_branch() {
 
   if [ "$IS_HGR" == "0" ]; then
     FORMAT_STRING="hg:$(hg branch 2> /dev/null)"
-    FORMAT_STRING="($FORMAT_STRING)"
   elif [ "$IS_GIT" == "0" ]; then
     FORMAT_STRING="git:$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
-    FORMAT_STRING="($FORMAT_STRING)"
   fi
 
   echo $FORMAT_STRING
@@ -21,9 +19,12 @@ parse_branch() {
 
 # logic for the branch type
 branch="\$(parse_branch)"
-if [ -n "$branch" ]; then
-    branch=" $DARKGRAY$LIGHTCYAN$branch$DARKGRAY$NOCOLOR"
+if [ -n "$branch" ] && [ "$branch" != "" ]; then
+  branch=" $DARKGRAY($YELLOW$branch$DARKGRAY)$WHITE"
 fi
 
-export PS1="::\n:: $GREEN\u$DARKGRAY@$WHITE\h:$LIGHTGRAY\W$branch$WHITE\n:>$LIGHTGRAY "
+# logic for attaching date
+DATESTR=$(date)
+
+export PS1="$WHITE:: $DARKGRAY($CYAN$DATESTR$DARKGRAY)$WHITE\n:: $GREEN\u$DARKGRAY@$WHITE\h:$LIGHTCYAN\W$branch\n:>$LIGHTGRAY "
 

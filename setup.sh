@@ -53,12 +53,14 @@ curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
 # ask if ssh key should be used, otherwise install pathogen via https
 while true; do
-	read -p " - Use \"~/.ssh/id_rsa\" to clone pathogen repos? (y/n) " RESP
+  export SSH_AUTH_SOCK=$(find /tmp -path '*/ssh-*' -name 'agent*' -uid $(id -u) 2>/dev/null | tail -n1)
 
+  read -p " - Use \"~/.ssh/id_rsa\" to clone pathogen repos? (y/n) " RESP
 	if [ "$RESP" == "y" ]; then
-    printf "\n\n"
-    eval `ssh-agent -s`
-		ssh-add ~/.ssh/id_rsa
+    if [ -z "$SSH_AUTH_SOCK" ] || [ "$SSH_AUTH_SOCK" == "" ]; then
+      eval `ssh-agent -s`
+      ssh-add ~/.ssh/id_rsa
+    fi
 		GHS='git@'
 		GHD=':'
     printf "\n\n"
@@ -72,6 +74,7 @@ while true; do
 	fi
 done
 
+printf "\033[A\33[2K\033[\33[2K\033[A\33[2K"
 PATHOGEN_INSTALLS="
 ${GHS}github.com${GHD}rust-lang/rust.vim.git
 ${GHS}github.com${GHD}pangloss/vim-javascript.git
