@@ -25,5 +25,5 @@ if [ -n "$branch" ]; then
     branch=" $DARKGRAY$LIGHTCYAN$branch$DARKGRAY$NOCOLOR"
 fi
 
-export PS1="\n:: $GREEN\u$DARKGRAY@$WHITE\h:$LIGHTGRAY\W$branch$WHITE\n~>$LIGHTGRAY "
+export PS1="::\n:: $GREEN\u$DARKGRAY@$WHITE\h:$LIGHTGRAY\W$branch$WHITE\n:>$LIGHTGRAY "
 
