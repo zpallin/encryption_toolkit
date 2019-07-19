@@ -3,7 +3,7 @@
 ################################################################################
 # parse branch
 #   supports git and hg... :|
-parse_branch() {
+parse-branch() {
   FORMAT_STRING=""
   IS_GIT=`git rev-parse --is-inside-work-tree > /dev/null 2>&1; echo $?`
   IS_HGR=`hg summary > /dev/null 2>&1; echo $?`
@@ -17,12 +17,23 @@ parse_branch() {
   echo $FORMAT_STRING
 }
 
-# logic for the branch type
-branch="\$(parse_branch)"
-if [ -n "$branch" ] && [ "$branch" != "" ]; then
-  branch=" $DARKGRAY($YELLOW$branch$DARKGRAY)$GRAY"
-fi
+get-fmt-branch() {
+	B=$(parse-branch)
+	if [ "$B" != "" ] && [ -n "$B" ]; then
+		echo -e "$GRAY($YELLOW$B$GRAY)$NOCOLOR"
+	else
+		echo -e ""
+	fi
+}
 
-# logic for attaching date
-export PS1="$DARKGRAY:: $DARKGRAY($CYAN\$(date)$DARKGRAY)$DARKGRAY\n:: $GREEN\u$DARKGRAY@$GRAY\h:$LIGHTCYAN\W$branch\n$DARKGRAY:>$WHITE "
+# logic for the branch type
+
+# logic for PS1 attributes
+DBLCLN="\[$GRAY\]::\[$NOCOLOR\]"
+FNLCLN="\[$GRAY\]:>\[$NOCOLOR\]"
+DATEFMT="\[$GRAY\](\[$CYAN\]\$(date)\[$GRAY\])\[$NOCOLOR\]"
+USERNAME="\[$LIGHTCYAN\]\u\[$GRAY\]@\[$GRAY\]\h\[$NOCOLOR\]"
+DIRECTORY="\[$LIGHTRED\]\W\[$NOCOLOR\]"
+BRANCH="\$(get-fmt-branch)"
+export PS1="$DBLCLN $DATEFMT\n$DBLCLN $USERNAME:$DIRECTORY $BRANCH\n$FNLCLN "
 

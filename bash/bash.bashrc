@@ -23,28 +23,31 @@ fi
 
 ################################################################################
 # colors
-BLACK="\[\033[0;30m\]"
-BLUE="\[\033[0;34m\]"
-GREEN="\[\033[0;32m\]"
-CYAN="\[\033[0;36m\]"
-RED="\[\033[0;31m\]"
-PURPLE="\[\033[0;35m\]"
-BROWN="\[\033[0;33m\]"
-LIGHTGRAY="\[\033[0;37m\]"
-DARKGRAY="\[\033[1;30m\]"
-LIGHTBLUE="\[\033[1;34m\]"
-LIGHTGREEN="\[\033[1;32m\]"
-LIGHTCYAN="\[\033[1;36m\]"
-LIGHTRED="\[\033[1;31m\]"
-LIGHTPURPLE="\[\033[1;35m\]"
-YELLOW="\[\033[1;33m\]"
-WHITE="\[\033[1;37m\]"
-NOCOLOR="\[\033[0m\]"
+BLACK="\033[0;30m"
+BLUE="\033[0;34m"
+GREEN="\033[0;32m"
+CYAN="\033[0;36m"
+RED="\033[0;31m"
+PURPLE="\033[0;35m"
+BROWN="\033[0;33m"
+LIGHTGRAY="\033[0;37m"
+DARKGRAY="\033[1;30m"
+GRAY="\033[1;30m"
+LIGHTBLUE="\033[1;34m"
+LIGHTGREEN="\033[1;32m"
+LIGHTCYAN="\033[1;36m"
+LIGHTRED="\033[1;31m"
+LIGHTPURPLE="\033[1;35m"
+YELLOW="\033[1;33m"
+WHITE="\033[1;37m"
+NOCOLOR="\033[0m"
 
 ################################################################################
 # import all includes
 
-echo "LOADING bash_includes"
+iter=1
+sp="/-\|"
+echo -e " - ${YELLOW}LOADING${WHITE} bash_includes"
 for file in ~/.bash_includes/*.sh
 do
   if [[ $(basename $file) == *"README.md"* ]];
@@ -53,7 +56,7 @@ do
   else
     if [ -f "$file" ]; 
     then
-      echo " - Loading \"$file\""
+      echo -e " - ${CYAN}Loading${WHITE} \"$file\""
       source "$file"
     else
       echo " - Doesn't exist: \"$file\""
@@ -61,7 +64,8 @@ do
   fi
 done
 
-echo "ADDING ~/.bash_bin to environment"
+echo -e " - ${GREEN}FINISHING${NOCOLOR} by adding ~/.bash_bin to environment\n"
+
 BASH_BIN=~/.bash_bin
 mkdir -p $BASH_BIN
 PATH="$BASH_BIN:$PATH"
