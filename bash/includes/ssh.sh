@@ -12,7 +12,6 @@ SSHTOOLKITFOOTER="#zpallin-toolkit-ssh-foot"
 
 function insert-ssh-config() {
 	INSERTCONF='Host *\n\tIgnoreUnknown yes\n\tAddKeysToAgent yes\n\tIdentityFile ~\/.ssh\/id_rsa'
-
 	sed -i -n "/#zpallin.toolkit.ssh.head/{p;:a;N;/#zpallin.toolkit.ssh.foot/!ba;s/.*\n/$INSERTCONF\n/};p" ~/.ssh/config
 }
 
@@ -47,13 +46,14 @@ function manage-ssh-config() {
 	insert-ssh-config
 }
 
+function manage-ssh-session() {
+  export SSH_AUTH_SOCK=$(find /tmp -path '*/ssh-*' -name 'agent*' -uid $(id -u) 2>/dev/null | tail -n1)
+
+  if [ -z "$SSH_AUTH_SOCK" ] || [ "$SSH_AUTH_SOCK" == "" ]; then
+    eval `ssh-agent -s`
+    ssh-add ~/.ssh/id_rsa
+  fi
+}
+
 manage-ssh-config
-#
-#zpallin-toolkit-ssh-head
-#Host *
-#  IgnoreUnknown UseKeychain
-#  UseKeychain yes
-#  AddKeysToAgent yes
-#  IdentityFile ~/.ssh/id_rsa
-#zpallin-toolkit-ssh-foot
-#
+manage-ssh-session
