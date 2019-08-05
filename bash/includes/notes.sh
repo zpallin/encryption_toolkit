@@ -3,6 +3,11 @@
 #
 #	A simple bash command line utility for writing notes in localfiles
 #
+NOTEHOME=~/.notes
+
+#
+#	Help section for ~/.notes
+#
 read -r -d "" NOTEHELP <<EOF
 ${GREEN}Of Note${NOCOLOR}
   A simple cli note-taking tool for linux (that may also work on Mac).
@@ -35,7 +40,6 @@ function note-error() {
 
 function note() {
 	local HELP=false
-	local NOTEHOME=~/.notes
 	local REMOVE=false
 	local LIST=false
 	local TOUCH=false
@@ -127,3 +131,29 @@ function note() {
 
 	vim -c "set filetype=$FILETYPE" $NOTEHOME/$NOTEPATH
 }
+
+function _note-dir-complete_() {
+	local TMPFILE=/tmp/note-dir-complete.txt
+	local cmd="${1##*/}"
+	local word=${COMP_WORDS[COMP_CWORD]}
+
+	COMPREPLY=($(compgen -W "$(ls $NOTEHOME)" -- "${word}"))
+}
+
+g_proj_dir=~/.notes/
+
+_dev()
+{
+    local cmd=$1 cur=$2 pre=$3
+    local _cur compreply
+
+    _cur=$g_proj_dir/$cur
+		compdirs=( $(compgen -d "$_cur" ) )
+    compreply=( $( compgen -f "$_cur" ) )
+		for d in ${compdirs[@]}; do
+			compreply=($(echo ${compreply[@]} | sed "s#\($d\)\(\ *\$*\)#\1\/\2#"))
+		done
+    COMPREPLY=( ${compreply[@]#$g_proj_dir/} )
+}
+
+complete -F _dev -o nospace note
